@@ -1,12 +1,28 @@
 import dotenv from "dotenv";
 import { app } from "./app";
+import mongoose from "mongoose";
+import fs from "fs";
+import path from "path";
 
-dotenv.config({
-  path: "../config.env"
+const envPath = path.resolve(__dirname, "../config.env");
+
+if (!fs.existsSync(envPath)) {
+  console.error("config.env not found at:", envPath);
+}
+
+dotenv.config({ path: envPath });
+
+const DB = String(process.env.DB?.replace("<db_password>",process.env.DB_PASSWORD ?? ''));
+
+mongoose.connect(DB)
+.then(() => {
+  console.log("DB connected")
+}).catch(() =>{
+  console.log("Error connecting to DB");
 })
 
-const Port = process.env.PORT
+const Port = Number(process.env.PORT);
 
 app.listen(Port,()=>{
-  console.log(`listening on port ${3000}`);
+  console.log(`listening on port ${Port}`);
 })
