@@ -14,11 +14,12 @@ dotenv.config({ path: envPath });
 
 const DB = String(process.env.DB?.replace("<db_password>",process.env.DB_PASSWORD ?? ''));
 
+
 mongoose.connect(DB)
 .then(() => {
   console.log("DB connected")
-}).catch(() =>{
-  console.log("Error connecting to DB");
+}).catch((err) =>{
+  console.log(err);
 })
 
 const Port = Number(process.env.PORT);
