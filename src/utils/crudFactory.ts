@@ -6,6 +6,10 @@ export const getAll = async <T>(model:Model<T>) => {
   return await model.find();
 }
 
+export const getOne = async <T>(model:Model<T>,id:idInput) => {
+  return await model.findOne({_id: id});
+}
+
 export const create = async <T>(model:Model<T>,body:object) => {
   return await model.create(body);
 }

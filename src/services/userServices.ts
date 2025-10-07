@@ -11,6 +11,10 @@ export const getUsers = async () =>{
   return await userFactory.getAll(User);
 }
 
+export const getUser = async (id:string) =>{
+  return await userFactory.getOne(User,id);
+}
+
 export const updateUser = async (user:object,id:string) =>{
   return await userFactory.update(User,user,id);
 }
