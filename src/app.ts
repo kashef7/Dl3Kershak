@@ -1,7 +1,7 @@
 import express from "express";
 import {router as userRouter} from './routes/userRoutes'
 import {router as restaurantRouter} from './routes/restaurantRoutes'
-import {router as menuItemRouter} from './routes/menuItemRoutes'
+//import {router as menuItemRouter} from './routes/menuItemRoutes'
 import AppError from "./utils/AppError";
 import errorHandler from "./middlewares/errorHandler";
 import cookieParser from "cookie-parser";
@@ -13,7 +13,7 @@ app.use(cookieParser());
 
 app.use('/api/v1/users',userRouter)
 app.use('/api/v1/restaurants',restaurantRouter)
-app.use('/api/v1/menuItems',menuItemRouter)
+//app.use('/api/v1/menuItems',menuItemRouter) -> users shouldn't access the menu route directly
 
 
 

@@ -3,15 +3,16 @@ import  { IUser } from "./userModel";
 import MenuItem from "./menuModel";
 
 export interface IRestaurant {
- name: string;
- address: string;
- phone: string;
- website?: string;
- email?: string;
- image: string;
- owner: mongoose.Types.ObjectId | IUser ;    
- cusines?: string[];
- menuItem: mongoose.Types.ObjectId[] | typeof MenuItem[];
+  name: string;
+  address: string;
+  phone: string;
+  website?: string;
+  email?: string;
+  image?: string;
+  owner: mongoose.Types.ObjectId | IUser ;    
+  cusines?: string[];
+  tags: string[]
+  menuItem?: mongoose.Types.ObjectId[] | typeof MenuItem[];
 }
 
 const restaurantSchema = new mongoose.Schema<IRestaurant>({
@@ -20,7 +21,7 @@ name: {
     required: [true, "Restaurant name is required"],
     trim: true,
     maxlength: [100, "Restaurant name must be less than 100 characters"],
- },
+},
 address: {
     required: [true, "Address is required"],
     type: String,
@@ -66,9 +67,21 @@ owner: {
     required: [true, "Owner is required"]
 }
 ,
+tags:{
+  type: [String],
+  validate: {
+    validator: function(v: string[]) {
+      if (!Array.isArray(v)) return false;
+      if (v.length === 0) return false;
+      return v.every(t => typeof t === 'string' && t.trim().length > 0);
+    },
+    message: 'Tags must be a non-empty array of non-empty strings'
+  },
+  required: [true,'All restaurants must have a tag to specify food type that is served']
+},
 image: {
     type: String,
-    required: [true, "Image URL is required"],
+
     trim: true,
     validate: {
         validator: function(v: string) {

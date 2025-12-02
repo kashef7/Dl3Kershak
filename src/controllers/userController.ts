@@ -5,9 +5,9 @@ import {Types} from "mongoose";
 
 export const createUser = async (req: Request,res: Response,next:NextFunction) =>{
   try{
+  req.body.role = "customer";
   const newUser = req.body;
   const user = await services.createUser(newUser)
-
   res.status(201).json(user);
   } catch(err){
     next(err);

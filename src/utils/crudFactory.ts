@@ -1,9 +1,9 @@
-import { Model ,Types } from "mongoose";
+import { FilterQuery, Model ,Types } from "mongoose";
 
 type idInput = string | Types.ObjectId;
 
-export const getAll = async <T>(model:Model<T>) => {
-  return await model.find();
+export const getAll = async <T>(model:Model<T>,filter:FilterQuery<T> = {}) => {
+  return await model.find(filter);
 }
 
 export const getOne = async <T>(model:Model<T>,id:idInput) => {

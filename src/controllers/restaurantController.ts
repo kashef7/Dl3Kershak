@@ -1,16 +1,16 @@
-import * as services from '../services/RestaurantServices'
+import * as services from '../services/restaurantServices'
 import { NextFunction, Request, Response } from "express";
 
-export const CreateRestaurant = async (req: Request,res: Response,next:NextFunction) =>{
-    try{
-    const newRestaurant = req.body;
-    const restaurant = await services.createRestaurant(newRestaurant)
-    res.status(201).json(restaurant);
-    } catch(err){
-      next(err);
+export const CreateRestaurant = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        req.body.owner = (req as any).user._id;
+        const newRestaurant = req.body;
+        const restaurant = await services.createRestaurant(newRestaurant);
+        res.status(201).json(restaurant);
+    } catch (err) {
+        next(err);
     }
 }
-
 export const GetRestaurants = async (_req: Request,res: Response,next:NextFunction) =>{
     try{
     const restaurants = await services.getRestaurants();
