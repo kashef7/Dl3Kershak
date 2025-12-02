@@ -1,4 +1,5 @@
-import MenuItem from "../models/menuModel";
+import { FilterQuery } from "mongoose";
+import MenuItem, { IMenuItem } from "../models/menuModel";
 import * as menuItemFactory from "../utils/crudFactory";
 
 //Only Restaurant Owner and restaurant owner should have access to these Functions
@@ -6,8 +7,8 @@ import * as menuItemFactory from "../utils/crudFactory";
 export const createMenuItem = async(menuItem:object) =>{
   return await menuItemFactory.create(MenuItem,menuItem)
 }
-export const getMenuItems = async () =>{
-  return await menuItemFactory.getAll(MenuItem);
+export const getMenuItems = async (filter:FilterQuery<IMenuItem>) =>{
+  return await menuItemFactory.getAll(MenuItem,filter);
 }
 export const getMenuItem = async (id:string) =>{
     return await menuItemFactory.getOne(MenuItem,id);

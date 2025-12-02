@@ -31,9 +31,14 @@ export const protect = async (req:Request,_res:Response,next:NextFunction) =>{
 
 export const restrictTo = (...roles:Array<string>) =>{
   return (req:Request,_res:Response,next:NextFunction) =>{
-    if(!((req as any).user.roles in roles)){
+    if(!roles.includes((req as any).user.role)){
       next(new AppError("unAuthorized User",403));
     }
     next();
   }
+}
+
+//Check if the restaurant owner is the true owner
+export const checkOwner = () =>{
+  return
 }

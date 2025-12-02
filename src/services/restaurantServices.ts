@@ -19,7 +19,7 @@ export const deleteRestaurant = async (id:string) =>{
 }
 export const addMenuItemToRestaurant = async(restaurantId:string, menuItemId:string) =>{
     const restaurant = await Restaurant.findById(restaurantId);
-    if(!restaurant){
+    if(!restaurant?.menuItem){
         throw new Error(`Restaurant with id ${restaurantId} not found`);
     } 
     restaurant.menuItem.push(menuItemId as any);

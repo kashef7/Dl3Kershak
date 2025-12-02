@@ -1,5 +1,7 @@
+import { FilterQuery } from 'mongoose';
 import * as service from '../services/menuItemServices'
 import { NextFunction, Request, Response } from "express";
+import { IMenuItem } from '../models/menuModel';
 
 export const CreateMenuItem = async (req: Request,res: Response,next:NextFunction) =>{
     try{
@@ -10,10 +12,11 @@ export const CreateMenuItem = async (req: Request,res: Response,next:NextFunctio
       next(err);
     }
 }
-export const GetMenuItems = async (_req: Request,res: Response,next:NextFunction) =>{
+export const GetMenuItems = async (req: Request,res: Response,next:NextFunction) =>{
     try{
-    const menuItems = await service.getMenuItems();
-    res.status(201).json(menuItems);
+    const filter:FilterQuery<IMenuItem> = {restaurant: req.params.restaurantId};   
+    const menuItems = await service.getMenuItems(filter);
+    res.status(200).json(menuItems);
     }
     catch(err){
         next(err);
@@ -24,7 +27,7 @@ export const GetMenuItem = async (req: Request,res: Response,next:NextFunction) 
     try{
     const {id} = req.params;
     const menuItem = await service.getMenuItem(id);
-    res.status(201).json(menuItem);
+    res.status(200).json(menuItem);
     } catch(err){
         next(err);
     }
@@ -33,7 +36,7 @@ export const UpdateMenuItem = async (req: Request,res: Response,next:NextFunctio
     try{
     const {id} = req.params;
     const menuItem = await service.updateMenuItem(req.body,id);
-    res.status(201).json(menuItem);
+    res.status(200).json(menuItem);
     }
     catch(err){
         next(err);
